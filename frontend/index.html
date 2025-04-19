@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head><title>TODO App</title></head>
+<body>
+  <h1>TODO List</h1>
+  <ul id="todos"></ul>
+  <input type="text" id="todoInput" placeholder="Add todo">
+  <button onclick="addTodo()">Add</button>
+
+  <script>
+    async function loadTodos() {
+      const res = await fetch('http://localhost:3000/todos');
+      const todos = await res.json();
+      document.getElementById('todos').innerHTML = todos.map(t => `<li>${t.text}</li>`).join('');
+    }
+
+    async function addTodo() {
+      const text = document.getElementById('todoInput').value;
+      await fetch('http://localhost:3000/todos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      loadTodos();
+    }
+
+    loadTodos();
+  </script>
+</body>
+</html>

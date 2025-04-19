@@ -1,0 +1,6 @@
+# Use nginx to serve static files
+FROM nginx:alpine
+
+# Copy index.html to nginx public folder
+COPY index.html /usr/share/nginx/html/index.html
+
